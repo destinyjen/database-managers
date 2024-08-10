@@ -190,7 +190,8 @@ async function viewDepartments() {
     }
 }
 
-
+// Export the functions for use in other modules
+module.exports = { addDepartment, viewDepartments, addRole, viewRoles, updateEmployeeRole, addEmployee, viewEmployees };
 
 
 
