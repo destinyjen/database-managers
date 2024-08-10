@@ -23,17 +23,36 @@ async function addEmployee() {
         {
             type: "input",
             name: "first_name",
-            message: "Enter the employee's first name:"
+            message: "Enter employee's first name:"
         },
         {
             type: "input",
             name: "last_name",
-            message: "Enter the employee's last name:"
+            message: "Enter employee's last name:"
         },
         {
             type: "input",
             name: "role_id",
-            message: "Enter the employee's role ID:"
+            message: "Enter employee's role ID:"
         },
     ]);
+
+    // Reconstruct the answers object
+    const { first_name, last_name, role_id } = employee;
+
+    // Insert new employee into the database
+    try {
+        const result = await pool.query(
+            `INSERT INTO employee (first_name, last_name, role_id) VALUES ($1, $2, $3) RETURNING *`,
+            [employee.first_name, employee.last_name, employee.role_id]
+        );
+        console.log("New Employee Successfully Added!");
+    } 
+    catch (error) {
+        console.error(error); //Log any errors
+    }
+}
+
+
+
 
