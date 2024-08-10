@@ -44,11 +44,85 @@ async function addEmployee() {
     try {
         const result = await pool.query(
             `INSERT INTO employee (first_name, last_name, role_id) VALUES ($1, $2, $3) RETURNING *`,
-            [employee.first_name, employee.last_name, employee.role_id]
+            [first_name, last_name, role_id]
         );
         console.log("New Employee Successfully Added!");
     } 
     catch (error) {
+        console.error(error); //Log any errors
+    }
+}
+
+// Create a function to update an employee's role
+async function updateEmployeeRole() {
+    // Prompt user for employee details and new role ID
+    const employee = await inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "Enter employee's first name:"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "Enter employee's last name:"
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "Enter employee's new role ID:"
+        },
+    ]);
+
+    // Reconstruct the employee object
+    const { first_name, last_name, role_id } = employee;
+
+    // Update the employee's role in the database
+    try {
+        const result = await pool.query(
+            `UPDATE employee SET role_id = $1 WHERE first_name = $2 AND last_name = $3 RETURNING *`,
+            [role_id, first_name, last_name]
+        );
+        console.log(`Employee successfully updated for ${first_name} ${last_name}!`);
+    } 
+    catch (error) {
+        console.error(error); //Log any errors
+    }
+}
+
+// Function to add a new role
+async function addRole() {
+    // Prompt user for role details
+    const questions = [
+        {
+            type: "input",
+            name: "title",
+            message: "Enter the new roles title:"
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Enter the new role salary:"
+        },
+        {
+            type: "input",
+            name: "department_id",
+            message: "Enter the new role department ID:"
+        },
+    ];
+
+    try {
+        const role = await inquirer.prompt(questions);
+          // Reconstruct the role object
+        const { title, salary, department_id } = role;
+
+        // Insert the new role into the database
+        const result = await pool.query(
+            `INSERT INTO role (title, salary, department_id) VALUES ($1, $2, $3) RETURNING *`,
+            [title, salary, department_id]
+        );
+        console.log("New Role Successfully Added!");
+    } catch (error) {
         console.error(error); //Log any errors
     }
 }
