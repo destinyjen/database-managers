@@ -167,6 +167,32 @@ async function viewRoles() {
     }
 }
 
+// Create a function to view all employees
+async function viewEmployees() {
+    try {
+        // Query the database for all employees
+        const result = await pool.query('SELECT * FROM employee');
+        console.table(result.rows);
+    } catch (error) {
+        console.error(error); // Log any errors
+    }
+}
+
+
+// Create a function to view all departments
+async function viewDepartments() {
+    try {
+        // Query the database for all departments
+        const result = await pool.query('SELECT * FROM department');
+        console.table(result.rows);
+    } catch (error) {
+        console.error(error); // Log any errors
+    }
+}
+
+
+
+
 
 
 
