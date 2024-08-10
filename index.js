@@ -160,7 +160,7 @@ async function addDepartment() {
 async function viewRoles() {
     try {
         // Query the database for all roles
-        const result = await pool.query('SELECT * FROM role');
+        const result = await pool.query('SELECT title, salary, department_name FROM roles JOIN department ON department.id = roles.department_id');
         console.table(result.rows);
     } catch (error) {
         console.error(error); // Log any errors
@@ -171,7 +171,12 @@ async function viewRoles() {
 async function viewEmployees() {
     try {
         // Query the database for all employees
-        const result = await pool.query('SELECT * FROM employee');
+        const result = await pool.query(`SELECT employee.first_name, employee.last_name, roles.title, roles.salary, department.department_name, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name
+        FROM employee
+        JOIN roles ON employee.role_id = roles.id
+        JOIN department ON department.id = roles.department_id
+        LEFT JOIN employee AS manager ON manager.id = employee.manager_id;
+        `);
         console.table(result.rows);
     } catch (error) {
         console.error(error); // Log any errors
