@@ -127,6 +127,48 @@ async function addRole() {
     }
 }
 
+// Create a function to add a new department
+async function addDepartment() {
+    try {
+        // Prompt user for department name
+        const answers = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'department_name',
+                message: "What is the name of your new department?",
+            }
+        ]);
+
+        const departmentName = answers.department_name;
+
+        try {
+            // Insert the new department into the database
+            const result = await pool.query(
+                'INSERT INTO department (department_name) VALUES ($1)',
+                [departmentName]
+            );
+            console.log("New Department Successfully Added!");
+        } catch (error) {
+            console.error(error); // Log any errors
+        }
+    } catch (error) {
+        console.error(error); // Log any errors
+    }
+}
+
+// Create a function to view all roles
+async function viewRoles() {
+    try {
+        // Query the database for all roles
+        const result = await pool.query('SELECT * FROM role');
+        console.table(result.rows);
+    } catch (error) {
+        console.error(error); // Log any errors
+    }
+}
+
+
+
 
 
 
