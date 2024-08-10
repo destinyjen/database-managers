@@ -13,3 +13,27 @@ const pool = new Pool(
     },
     console.log(`Connected to the store_db Database!`) // console.log a message to confirm successful connection
 );
+
+// Create a function to add in a new employee
+
+async function addEmployee() {
+    // Prompt user for employee information
+
+    const employee = await inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "Enter the employee's first name:"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "Enter the employee's last name:"
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "Enter the employee's role ID:"
+        },
+    ]);
+
