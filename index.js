@@ -16,7 +16,7 @@ const pool = new Pool(
 
 // Create a function to add in a new employee
 
-async function addEmployee() {
+async function addEmployee(cb) {
     // Prompt user for employee information
 
     const employee = await inquirer.prompt([
@@ -50,6 +50,8 @@ async function addEmployee() {
     } 
     catch (error) {
         console.error(error); //Log any errors
+    }finally{
+        cb();
     }
 }
 
@@ -168,30 +170,34 @@ async function viewRoles() {
 }
 
 // Create a function to view all employees
-async function viewEmployees() {
+async function viewEmployees(cb) {
     try {
         // Query the database for all employees
         const result = await pool.query(`SELECT employee.first_name, employee.last_name, roles.title, roles.salary, department.department_name, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name
         FROM employee
         JOIN roles ON employee.role_id = roles.id
         JOIN department ON department.id = roles.department_id
-        LEFT JOIN employee AS manager ON manager.id = employee.manager_id;
+        LEFT JOIN employee manager ON manager.id = employee.manager_id;
         `);
         console.table(result.rows);
     } catch (error) {
         console.error(error); // Log any errors
+    }finally{
+        cb();
     }
 }
 
 
 // Create a function to view all departments
-async function viewDepartments() {
+async function viewDepartments(cb) {
     try {
         // Query the database for all departments
         const result = await pool.query('SELECT * FROM department');
         console.table(result.rows);
     } catch (error) {
         console.error(error); // Log any errors
+    }finally{
+        cb();
     }
 }
 
