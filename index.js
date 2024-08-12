@@ -56,7 +56,7 @@ async function addEmployee(cb) {
 }
 
 // Create a function to update an employee's role
-async function updateEmployeeRole() {
+async function updateEmployeeRole(cb) {
     // Prompt user for employee details and new role ID
     const employee = await inquirer.prompt([
         {
@@ -89,11 +89,13 @@ async function updateEmployeeRole() {
     } 
     catch (error) {
         console.error(error); //Log any errors
+    }finally{
+        cb();
     }
 }
 
 // Function to add a new role
-async function addRole() {
+async function addRole(cb) {
     // Prompt user for role details
     const questions = [
         {
@@ -126,11 +128,13 @@ async function addRole() {
         console.log("New Role Successfully Added!");
     } catch (error) {
         console.error(error); //Log any errors
+    }finally{
+        cb();
     }
 }
 
 // Create a function to add a new department
-async function addDepartment() {
+async function addDepartment(cb) {
     try {
         // Prompt user for department name
         const answers = await inquirer.prompt([
@@ -155,17 +159,21 @@ async function addDepartment() {
         }
     } catch (error) {
         console.error(error); // Log any errors
+    }finally{
+        cb();
     }
 }
 
 // Create a function to view all roles
-async function viewRoles() {
+async function viewRoles(cb) {
     try {
         // Query the database for all roles
         const result = await pool.query('SELECT title, salary, department_name FROM roles JOIN department ON department.id = roles.department_id');
         console.table(result.rows);
     } catch (error) {
         console.error(error); // Log any errors
+    }finally{
+        cb();
     }
 }
 
@@ -186,7 +194,6 @@ async function viewEmployees(cb) {
         cb();
     }
 }
-
 
 // Create a function to view all departments
 async function viewDepartments(cb) {

@@ -31,10 +31,10 @@ function init() {
             viewDepartments(init);
         }
         if (answers.departmentList === "View All Roles") {
-            viewRoles();
+            viewRoles(init);
         }
         if (answers.departmentList === "Add Department") {
-            addDepartment();
+            addDepartment(init);
         }
         if (answers.departmentList === "View All Employees") {
             viewEmployees(init);
@@ -43,10 +43,10 @@ function init() {
             addEmployee(init);
         }
         if (answers.departmentList === "Update Employee Role") {
-            updateEmployeeRole();
+            updateEmployeeRole(init);
         }
         if (answers.departmentList === "Add Role") {
-            addRole();
+            addRole(init);
         }
         // Exit the program if the user chooses to quit
         if (answers.departmentList === "Quit") {
